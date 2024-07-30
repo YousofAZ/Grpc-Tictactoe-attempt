@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package TicTacToe;
+
+message AssignPlayerRequest {}
+message AssignPlayerResponse {
+  int32 player_number = 1;
+}
+
+//the player's move.
+message MoveRequest {
+  int32 player = 1;
+  int32 row = 2;
+  int32 column = 3;
+}
+
+//result of the move.
+message MoveResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+// The request message to check the winner.
+message CheckWinnerRequest {}
+
+//winner and current board state.
+message CheckWinnerResponse {
+  int32 winner = 1; // 0 = no winner, 1 = player 1, 2 = player 2, 3 = draw
+  repeated int32 board = 2;
+  int32 current_player = 3;
+}
+
+// The TicTacToe service definition.
+service TicTacToe {
+  rpc AssignPlayer (AssignPlayerRequest) returns (AssignPlayerResponse);
+  rpc UserInput (MoveRequest) returns (MoveResponse);
+  rpc CheckWinner (CheckWinnerRequest) returns (CheckWinnerResponse);
+}
